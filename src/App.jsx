@@ -1,74 +1,105 @@
-import { useEffect, useState } from 'react'
-import groot from './assets/groot.png'
-import ironman from './assets/ironman.jpg'
-import thor from './assets/thor.png'
-
+import { useEffect, useState } from "react";
+import groot from "./assets/groot.png";
+import ironman from "./assets/ironman.jpg";
+import thor from "./assets/thor.png";
 
 function App() {
-  const [screen, SetScreen] = useState(1);
-  const [imgUrl, setImgUrl] = useState("");
-  const [imgArr, setImgArry] = useState([]);
-  const [timer, setTimer] = useState(0);
+  const [screen, setScreen] = useState(1);
+  const [selectedAvatar, setSelectedAvatar] = useState("");
+  const [score, setScore] = useState(0);
+  const [generatedImages, setGeneratedImages] = useState([]);
+  console.log(generatedImages)
 
-
-  function handleStart(e) {
-    SetStartGame(true)
-    setImgUrl(e)
+  function handleClick(src) {
+    setSelectedAvatar(src);
+    setScreen((prev) => prev + 1);
   }
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    let interval;
+    if (screen === 3 && selectedAvatar) {
+      interval = setInterval(() => {
+        setGeneratedImages((prevImages) => [
+          ...prevImages,
+          {
+            id: Date.now(),
+            x: getARandomNumber("x") + "px",
+            y: getARandomNumber("y") + "px",
+          },
+        ]);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [screen, selectedAvatar]);
 
-      if (imgUrl) {
-        const obj = { id: Date.now(), img: imgUrl };
-        setImgArry(prevArr => [...prevArr, obj]);
-        timer++
-      }
-      return clearInterval(interval)
-    }, 1000);
-
-  }, [imgUrl]);
-
-  // console.log(imgArr)
+  function getARandomNumber(axis) {
+    return axis === "x"
+      ? Math.floor(Math.random() * 1000)
+      : Math.floor(Math.random() * 400);
+  }
 
   return (
-    <>
-      {screen === 1 &&
-        <div>
-          <h1>Start Game</h1>
-        </div>}
-
-      {screen === 2 &&
-        <div className='my-30'>
-          <div>Choose Your Avatar</div>
-          <div className='flex gap-20 mt-20'>
-            <div>
-              <img src={groot} alt="" className='w-[200px] cursor-pointer' onClick={(e) => handleStart(e.target.src)} />
-              <h1 className='cursor-pointer' >Groot</h1>
-
-            </div>
-            <div>
-              <img src={ironman} alt="" className='w-[200px] h-[200px] cursor-pointer' onClick={(e) => handleStart(e.target.src)} />
-              <h1 className='cursor-pointer' > Iron Man</h1>
-            </div>
-            <div>
-              <img src={thor} alt="" className='w-[200px] cursor-pointer' onClick={(e) => handleStart(e.target.src)} />
-              <h1 className='cursor-pointer' >Thor</h1>
-            </div>
-          </div>
-        </div>}
-
-
-      {/* <div>
-        <h1>time {timer}</h1>
-        <div>
-
+    <div className="h-screen flex items-center justify-center relative">
+      {/* Screen 1: Start Game */}
+      {screen === 1 && (
+        <div className="screen1 ">
+          <button onClick={() => setScreen((prev) => prev + 1)}
+            className="border-2 py-1 cursor-pointer bg-red-500 text-white px-3 mt-10 "
+          >
+            Start Game
+          </button>
         </div>
-      </div> */}
-    </>
+      )}
 
+      {/* Screen 2: Select Avatar */}
+      {screen === 2 && (
+        <div className="screen2">
+          <h3 className="text-center my-5 font-bold">Select Your Avatar</h3>
+          <div className="avatar-wrapper flex justify-center gap-10 pt-10">
+            <img
+              onClick={(e) => handleClick(e.target.src)}
+              className="avatar w-[200px] cursor-pointer"
+              src={groot}
+              alt="GROOT"
+            />
+            <img
+              onClick={(e) => handleClick(e.target.src)}
+              className="avatar w-[200px] cursor-pointer"
+              src={ironman}
+              alt="IRONMAN"
+            />
+            <img
+              onClick={(e) => handleClick(e.target.src)}
+              className="avatar w-[200px] cursor-pointer"
+              src={thor}
+              alt="THOR"
+            />
+          </div>
+        </div>
+      )}
 
-  )
+      {/* Screen 3: Gameplay */}
+      {screen === 3 && (
+        <div className="screen3 absolute top-10 left-10">
+          <div className="info">
+            <p>Time Left: <span></span></p>
+            <p>Score: <span>{score}</span></p>
+          </div>
+          <div className="playingArea mt-10">
+            {generatedImages.map((image, index) => (
+              <img
+                className="killShot w-[150px]"
+                key={index}
+                src={selectedAvatar}
+                alt="IMAGE"
+                style={{ left: image.x, top: image.y }}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
 
-export default App
+export default App;
