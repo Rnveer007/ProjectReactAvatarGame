@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import groot from "./assets/groot.png";
 import hulk from "./assets/hulk.png";
 import thor from "./assets/thor.png";
+// import bg from "./assets/background.jpeg";
 
 function App() {
   const [screen, setScreen] = useState(1);
@@ -55,7 +56,9 @@ function App() {
     setScore(prevScore => prevScore + 1);
   }
   return (
-    <div className="h-screen flex items-center justify-center relative">
+    <div className="h-screen flex items-center justify-center relative"
+    // style={{ backgroundImage: `url(${bg})` }}
+    >
       {/* Screen 1: Start Game */}
       {screen === 1 && (
         <div className="screen1 ">
