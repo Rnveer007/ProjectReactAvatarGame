@@ -8,7 +8,7 @@ function About() {
     const [startGame, SetStartGame] = useState(false);
     const [imgUrl, setImgUrl] = useState("");
     const [imgArr, setImgArry] = useState([]);
-    const [timer, setTimer] = useState([]);
+    const [timer, setTimer] = useState(0);
 
 
     function handleStart(e) {
@@ -22,6 +22,7 @@ function About() {
             if (imgUrl) {
                 const obj = { id: Date.now(), img: imgUrl };
                 setImgArry(prevArr => [...prevArr, obj]);
+                timer++
             }
         }, 1000);
 
@@ -47,6 +48,14 @@ function About() {
                         <img src={thor} alt="" className='w-[200px] cursor-pointer' onClick={(e) => handleStart(e.target.src)} />
                         <h1 className='cursor-pointer' >Thor</h1>
                     </div>
+                </div>
+            </div>
+
+
+            <div>
+                <h1>time {timer}</h1>
+                <div>
+
                 </div>
             </div>
         </>
