@@ -123,11 +123,10 @@ function App() {
 
       {screen === 4 && (
         <div className="screen1 ">
-          <div className="info absolute top-10 left-10 flex justify-between gap-20">
-            <p className="font-bold">Time Left: <span className="ml-3">{timer}</span></p>
-            <p className="font-bold">Score: <span className="ml-3">{score}</span></p>
-          </div>
           <h1 className="font-bold text-3xl">Thanks For Playing</h1>
+          <div className="info text-center mt-8">
+            <p className="font-bold text-2xl">Score: <span className="ml-3">{score}</span></p>
+          </div>
         </div>
       )}
     </div>
