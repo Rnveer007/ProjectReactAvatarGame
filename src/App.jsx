@@ -9,7 +9,7 @@ function App() {
   const [selectedAvatar, setSelectedAvatar] = useState("");
   const [score, setScore] = useState(0);
   const [generatedImages, setGeneratedImages] = useState([]);
-  const [timer, setTimer] = useState(10);
+  const [timer, setTimer] = useState(60);
   // console.log(score)
 
   function handleClick(src) {
@@ -103,7 +103,7 @@ function App() {
       {screen === 3 && (
         <div className="screen3 absolute top-10 left-10">
           <div className="info font-bold">
-            <p>Time Left: <span className="ml-3">{timer}</span></p>
+            <p>Time Left: <span className="ml-3">{timer} s</span></p>
             <p>Score: <span className="ml-3">{score}</span></p>
           </div>
           <div className="playingArea mt-10">
