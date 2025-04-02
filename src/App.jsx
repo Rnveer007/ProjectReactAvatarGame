@@ -9,7 +9,7 @@ function App() {
   const [selectedAvatar, setSelectedAvatar] = useState("");
   const [score, setScore] = useState(0);
   const [generatedImages, setGeneratedImages] = useState([]);
-  const [timer, setTimer] = useState(60)
+  const [timer, setTimer] = useState(10);
   // console.log(score)
 
   function handleClick(src) {
@@ -26,6 +26,8 @@ function App() {
           if (prevTime === 0) {
             clearInterval(interval);
             setGeneratedImages([]);
+            setScreen(4);
+
             return 0
           }
 
@@ -100,7 +102,7 @@ function App() {
       {/* Screen 3: Gameplay */}
       {screen === 3 && (
         <div className="screen3 absolute top-10 left-10">
-          <div className="info">
+          <div className="info font-bold">
             <p>Time Left: <span className="ml-3">{timer}</span></p>
             <p>Score: <span className="ml-3">{score}</span></p>
           </div>
@@ -116,6 +118,16 @@ function App() {
               />
             ))}
           </div>
+        </div>
+      )}
+
+      {screen === 4 && (
+        <div className="screen1 ">
+          <div className="info absolute top-10 left-10 flex justify-between gap-20">
+            <p className="font-bold">Time Left: <span className="ml-3">{timer}</span></p>
+            <p className="font-bold">Score: <span className="ml-3">{score}</span></p>
+          </div>
+          <h1 className="font-bold text-3xl">Thanks For Playing</h1>
         </div>
       )}
     </div>
